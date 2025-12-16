@@ -1,14 +1,14 @@
 import threading
-import uuid
 import time
+import uuid
 
 jobs = {}
 
-def render_video(job_id, video_url, quote):
-    # SIMULATION – hier kommt dein echtes Rendern rein
-    time.sleep(25)  # simuliert langes Rendern
 
-    # später: echtes ffmpeg / moviepy Ergebnis
+def render_video(job_id, video_url, quote):
+    # Simulation: langes Rendern
+    time.sleep(25)
+
     jobs[job_id]["status"] = "done"
     jobs[job_id]["video_url"] = f"https://example.com/{job_id}.mp4"
 
@@ -31,4 +31,4 @@ def start_render(video_url, quote):
 
 
 def get_status(job_id):
-    return jobs.get(job_id)
+    return jobs.get(job_id, {"status": "unknown"})
