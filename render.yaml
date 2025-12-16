@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: kopfvibes-render
+    env: python
+    buildCommand: apt-get update && apt-get install -y ffmpeg
+    startCommand: python app.py
