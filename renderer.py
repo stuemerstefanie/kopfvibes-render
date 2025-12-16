@@ -31,4 +31,12 @@ def start_render(video_url, quote):
 
 
 def get_status(job_id):
-    return jobs.get(job_id, {"status": "unknown"})
+    job = jobs.get(job_id)
+
+    if not job:
+        return {
+            "status": "processing"
+        }
+
+    return job
+
