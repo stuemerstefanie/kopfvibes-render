@@ -6,11 +6,20 @@ jobs = {}
 
 
 def render_video(job_id, video_url, quote):
-    # Simulation: langes Rendern
-    time.sleep(25)
+    try:
+        print("START RENDER:", job_id)
 
-    jobs[job_id]["status"] = "done"
-    jobs[job_id]["video_url"] = f"https://example.com/{job_id}.mp4"
+        time.sleep(10)  # absichtlich kürzer zum Test
+
+        jobs[job_id]["status"] = "done"
+        jobs[job_id]["video_url"] = f"https://example.com/{job_id}.mp4"
+
+        print("RENDER DONE:", job_id)
+
+    except Exception as e:
+        print("RENDER ERROR:", e)
+        jobs[job_id]["status"] = "error"
+
 
 
 def start_render(video_url, quote):
