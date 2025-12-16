@@ -16,10 +16,9 @@ def render():
 
     job_id = start_render(video, quote)
 
-    # SOFORTIGE ANTWORT
     return jsonify({
         "job_id": job_id,
-        "status": "started"
+        "status": "processing"
     })
 
 
@@ -27,7 +26,7 @@ def render():
 def status(job_id):
     job = get_status(job_id)
 
-    if not job:
+    if job is None:
         return jsonify({"error": "job not found"}), 404
 
     return jsonify(job)
