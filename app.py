@@ -1,14 +1,37 @@
 from flask import Flask, request, jsonify
-from renderer import start_render, jobs
+from renderer import start_render, get_status
 
 app = Flask(__name__)
+
 
 @app.route("/render", methods=["POST"])
 def render():
     data = request.json
-    job_id = start_render(data["video"], data["quote"])
-    return jsonify({"job_id": job_id}), 202
+
+    video = data.get("video")
+    quote = data.get("quote")
+
+    if not video or not quote:
+        return jsonify({"error": "video and quote required"}), 400
+
+    job_id = start_render(video, quote)
+
+    # SOFORTIGE ANTWORT
+    return jsonify({
+        "job_id": job_id,
+        "status": "started"
+    })
+
 
 @app.route("/status/<job_id>", methods=["GET"])
 def status(job_id):
-    return jsonify(jobs.get(job_id, {"error": "not found"}))
+    job = get_status(job_id)
+
+    if not job:
+        return jsonify({"error": "job not found"}), 404
+
+    return jsonify(job)
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000)
