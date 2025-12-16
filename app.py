@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from renderer import start_render, get_status
 
-# ❗ app MUSS ZUERST kommen
 app = Flask(__name__)
 
 @app.route("/render", methods=["POST"])
